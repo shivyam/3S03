@@ -49,4 +49,34 @@ public class CalculatorTest {
     public void testDivideByMinDouble() {
         assertThrows(ArithmeticException.class, () -> calc.divide(5, Double.MIN_VALUE));
     }
+
+    @Test
+    public void testNumeratorIsNaN() {
+        assertThrows(IllegalArgumentException.class, () -> calc.divide(Double.NaN, 5));
+    }
+
+    @Test
+    public void testNumeratorIsPositiveInfinity() {
+        assertThrows(IllegalArgumentException.class, () -> calc.divide(Double.POSITIVE_INFINITY, 5));
+    }
+
+    @Test
+    public void testNumeratorIsNegativeInfinity() {
+        assertThrows(IllegalArgumentException.class, () -> calc.divide(Double.NEGATIVE_INFINITY, 5));
+    }
+
+    @Test
+    public void testDenominatorIsPositiveInfinity() {
+        assertThrows(IllegalArgumentException.class, () -> calc.divide(5, Double.POSITIVE_INFINITY));
+    }
+
+    @Test
+    public void testDenominatorIsNegativeInfinity() {
+        assertThrows(IllegalArgumentException.class, () -> calc.divide(5, Double.NEGATIVE_INFINITY));
+    }
+
+    @Test
+    public void testDivisionOverflowToInfinity() {
+        assertThrows(ArithmeticException.class, () -> calc.divide(Double.MAX_VALUE, 0.1));
+    }
 }
