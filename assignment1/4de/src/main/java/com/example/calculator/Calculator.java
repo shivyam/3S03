@@ -6,14 +6,24 @@ public class Calculator {
     
     public double divide(double numerator, double denominator){
         
-        if (Double.isNaN(denominator)){
-            throw new IllegalArgumentException("Denominator is not a number (NaN)");
+        if (Double.isNaN(numerator) || Double.isNaN(denominator)){
+            throw new IllegalArgumentException("Input cannot be NaN");
         }
 
+        if (Double.isInfinite(numerator) || Double.isInfinite(denominator)){
+            throw new IllegalArgumentException("Input cannot be Infinity");
+        }
+        
         if (Math.abs(denominator) < EPSILON){
             throw new ArithmeticException("Division by zero (or effectively zero)");
         }
 
-        return numerator / denominator;
+        double result = numerator / denominator;
+
+        if (Double.isInfinite(result)){
+            throw new ArithmeticException("Division resulted in an overflow");
+        }
+        
+        return result;
     }
 }
